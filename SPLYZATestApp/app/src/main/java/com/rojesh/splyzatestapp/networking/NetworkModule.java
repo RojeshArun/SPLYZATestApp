@@ -15,7 +15,7 @@ public abstract class NetworkModule {
 
     @Provides
     @Singleton
-    private static Retrofit provideRetrofit(){
+    static Retrofit provideRetrofit(){
         return new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(MoshiConverterFactory.create())
