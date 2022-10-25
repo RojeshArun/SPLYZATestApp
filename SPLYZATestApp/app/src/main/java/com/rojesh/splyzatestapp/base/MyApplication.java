@@ -10,7 +10,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        component = (ApplicationComponent) this;
+        component = DaggerApplicationComponent.create();
     }
 
     public static ApplicationComponent getApplicationComponent(Context context) {
