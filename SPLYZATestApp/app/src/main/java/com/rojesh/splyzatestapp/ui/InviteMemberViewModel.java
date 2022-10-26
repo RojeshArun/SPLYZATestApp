@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.rojesh.splyzatestapp.networking.AppExecutors;
 import com.rojesh.splyzatestapp.ui.model.Team;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
@@ -13,9 +14,11 @@ import java.io.IOException;
 public class InviteMemberViewModel extends ViewModel {
 
     private final MutableLiveData<Team> teams = new MutableLiveData<>();
+    private AppExecutors appExecutors;
 
     public InviteMemberViewModel() {
-        loadTeam();
+        appExecutors = new AppExecutors();
+        appExecutors.networkID().execute(() -> loadTeam());
     }
 
     LiveData<Team> getTeams() {
@@ -44,7 +47,7 @@ public class InviteMemberViewModel extends ViewModel {
         JsonAdapter<Team> adapter = moshi.adapter(Team.class);
         try {
             Team team = adapter.fromJson(response);
-            teams.setValue(team);
+            appExecutors.mainThread().execute(() -> teams.setValue(team));
         } catch (IOException e) {
             e.printStackTrace();
         }

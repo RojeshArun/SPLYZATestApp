@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.rojesh.splyzatestapp.R;
 import com.rojesh.splyzatestapp.databinding.InviteMembersLytBinding;
 import com.rojesh.splyzatestapp.ui.model.Member;
+import com.rojesh.splyzatestapp.ui.model.Team;
 import com.rojesh.splyzatestapp.viewmodel.ViewModelFactory;
 
 import javax.inject.Inject;
@@ -36,15 +37,21 @@ public class InviteMembersScreen extends AppCompatActivity implements
         mIMViewBinding = InviteMembersLytBinding.inflate(getLayoutInflater());
         setContentView(mIMViewBinding.getRoot());
         setTheView();
-        setTheData();
+        observerViewModels();
     }
 
-    private void setTheData() {
-        mMemberViewModel.getTeams().observe(this, teams ->{
-            Member member = teams.members;
-            Toast.makeText(this, member.supporters+"", Toast.LENGTH_SHORT).show();
-
+    private void observerViewModels() {
+        mMemberViewModel.getTeams().observe(this, teams -> {
+            if (teams != null)
+                setTheData(teams);
         });
+    }
+
+    private void setTheData(Team teams) {
+        mIMViewBinding.txtCurrentMemebersVal.setText(teams.members.members + "");
+        mIMViewBinding.txtCurrentSupportersVal.setText(teams.members.supporters+"");
+        mIMViewBinding.txtLimitVal.setText(teams.plan.memberLimit+"");
+        mIMViewBinding.txtSupLimitVal.setText(teams.plan.supporterLimit+"");
     }
 
     private void setTheView() {
