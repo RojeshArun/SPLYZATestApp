@@ -5,36 +5,55 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.rojesh.splyzatestapp.R;
 import com.rojesh.splyzatestapp.databinding.InviteMembersLytBinding;
+import com.rojesh.splyzatestapp.ui.model.Member;
+import com.rojesh.splyzatestapp.viewmodel.ViewModelFactory;
 
-public class InviteMembersScreen extends AppCompatActivity  implements
-        OnItemSelectedListener{
+import javax.inject.Inject;
 
-    InviteMembersLytBinding viewBinding;
-    String[] mPermissionLevels = {"Coach","Player Coach","Player","Supporter"};
+public class InviteMembersScreen extends AppCompatActivity implements
+        OnItemSelectedListener {
+    @Inject
+    ViewModelFactory viewModelFactory;
+
+    private InviteMembersLytBinding mIMViewBinding;
+    private String[] mPermissionLevels = {"Coach", "Player Coach", "Player", "Supporter"};
+    private InviteMemberViewModel mMemberViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewBinding = InviteMembersLytBinding.inflate(getLayoutInflater());
-        setContentView(viewBinding.getRoot());
+        mMemberViewModel = ViewModelProviders.of(this, viewModelFactory)
+                .get(InviteMemberViewModel.class);
+        mIMViewBinding = InviteMembersLytBinding.inflate(getLayoutInflater());
+        setContentView(mIMViewBinding.getRoot());
         setTheView();
+        setTheData();
+    }
+
+    private void setTheData() {
+        mMemberViewModel.getTeams().observe(this, teams ->{
+            Member member = teams.members;
+            Toast.makeText(this, member.supporters+"", Toast.LENGTH_SHORT).show();
+
+        });
     }
 
     private void setTheView() {
-        setSupportActionBar(viewBinding.myToolbar);
-        viewBinding.sprnPermissionLevel.setOnItemSelectedListener(this);
+        setSupportActionBar(mIMViewBinding.myToolbar);
+        mIMViewBinding.sprnPermissionLevel.setOnItemSelectedListener(this);
         ArrayAdapter mPermissionSpinner = new ArrayAdapter(this,
-                android.R.layout.simple_spinner_item,mPermissionLevels);
+                android.R.layout.simple_spinner_item, mPermissionLevels);
         mPermissionSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        viewBinding.sprnPermissionLevel.setAdapter(mPermissionSpinner);
-
+        mIMViewBinding.sprnPermissionLevel.setAdapter(mPermissionSpinner);
 
     }
 

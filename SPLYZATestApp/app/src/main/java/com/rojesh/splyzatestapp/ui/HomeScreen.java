@@ -13,6 +13,7 @@ public class HomeScreen extends AppCompatActivity {
 
     ActivityHomeScreenBinding viewBindig;
     private InviteMemberViewModel mInviteMemberVM;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,7 +22,7 @@ public class HomeScreen extends AppCompatActivity {
 
         viewBindig.btnInvite.setOnClickListener(v -> {
             //Goto Invite Screen
-            Intent intent = new Intent(HomeScreen.this,InviteMembersScreen.class);
+            Intent intent = new Intent(HomeScreen.this, InviteMembersScreen.class);
             this.startActivity(intent);
         });
 
