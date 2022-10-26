@@ -1,6 +1,7 @@
 package com.rojesh.splyzatestapp.ui;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -49,9 +50,17 @@ public class InviteMembersScreen extends AppCompatActivity implements
 
     private void setTheData(Team teams) {
         mIMViewBinding.txtCurrentMemebersVal.setText(teams.members.members + "");
-        mIMViewBinding.txtCurrentSupportersVal.setText(teams.members.supporters+"");
-        mIMViewBinding.txtLimitVal.setText(teams.plan.memberLimit+"");
-        mIMViewBinding.txtSupLimitVal.setText(teams.plan.supporterLimit+"");
+        mIMViewBinding.txtLimitVal.setText(teams.plan.memberLimit + "");
+
+        // Implementing optional feature
+        if (teams.plan.supporterLimit != 0) {
+            mIMViewBinding.lytSupporters.setVisibility(View.VISIBLE);
+            mIMViewBinding.txtCurrentSupportersVal.setText(teams.members.supporters + "");
+            mIMViewBinding.txtSupLimitVal.setText(teams.plan.supporterLimit + "");
+        } else {
+            mIMViewBinding.lytSupporters.setVisibility(View.GONE);
+        }
+
     }
 
     private void setTheView() {
