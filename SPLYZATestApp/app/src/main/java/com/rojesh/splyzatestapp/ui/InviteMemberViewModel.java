@@ -74,10 +74,25 @@ public class InviteMemberViewModel extends ViewModel {
                 "\"supporterLimit\": 0\n" +
                 "} }";
 
+        String dummyResponse4 = "{\n" +
+                "\"id\": \"57994f271ca5dd20847b910c\",\n" +
+                "\"members\": {\n" +
+                "\"total\": 89,\n" +
+                "\"administrators\": 1,\n" +
+                "\"managers\": 18,\n" +
+                "\"editors\": 6,\n" +
+                "\"members\": 10,\n" +
+                "\"supporters\": 20\n" +
+                "},\n" +
+                "\"plan\": {\n" +
+                "\"memberLimit\": 100,\n" +
+                "\"supporterLimit\": 20\n" +
+                "} }";
+
         Moshi moshi = new Moshi.Builder().build();
         JsonAdapter<Team> adapter = moshi.adapter(Team.class);
         Random randomGenerator = new Random();
-        int ran = randomGenerator.nextInt(3) + 1;
+        int ran = randomGenerator.nextInt(4) + 1;
         String response = null;
         try {
             switch (ran) {
@@ -89,6 +104,9 @@ public class InviteMemberViewModel extends ViewModel {
                     break;
                 case 3:
                     response = dummyResponse3;
+                    break;
+                case 4:
+                    response = dummyResponse4;
                     break;
             }
             Team team = adapter.fromJson(response);

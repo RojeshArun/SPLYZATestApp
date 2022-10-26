@@ -75,6 +75,12 @@ public class InviteMembersScreen extends AppCompatActivity implements
             setTheSpinner(mWithoutSupporters);
         }
 
+        //Rule 3 If supporters are available but there are no open slots, the supporters
+        // option should be disabled
+        if(teams.members.supporters == teams.plan.supporterLimit){
+            setTheSpinner(mWithoutSupporters);
+        }
+
     }
 
     private void setTheView() {
