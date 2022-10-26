@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">SPLYZATestApp</string>
+    <string name="invite_members">Invite Members</string>
+    <string name="back">BACK</string>
+    <string name="current_members">Current Members :  </string>
+    <string name="limit">Limit :  </string>
+    <string name="invite_permissions">Invite Permissions</string>
+    <string name="invite_urls_view">Invite URLs are valid for 7 days. Permissions ca be changed from the member management view.</string>
+    <string name="what_are_permissions">What are Permissions?</string>
+    <string name="share_qr_code">Share QR Code</string>
+    <string name="copy_link">Copy Link</string>
 </resources>
