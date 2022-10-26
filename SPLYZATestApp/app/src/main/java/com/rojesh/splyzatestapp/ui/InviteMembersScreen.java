@@ -29,6 +29,7 @@ public class InviteMembersScreen extends AppCompatActivity implements
     private InviteMembersLytBinding mIMViewBinding;
     private String[] mPermissionLevels = {"Coach", "Player Coach", "Player", "Supporter"};
     private String[] mTeamFull = {"Supporter"};
+    private String[] mWithoutSupporters = {"Coach", "Player Coach", "Player"};
     private InviteMemberViewModel mMemberViewModel;
     private ArrayAdapter mPermissionSpinner;
 
@@ -69,14 +70,17 @@ public class InviteMembersScreen extends AppCompatActivity implements
             setTheSpinner(mTeamFull);
         }
 
+        //Rule 2 If supporters are not available for the team , then the supporter options shuold be hidden
+        if (teams.plan.supporterLimit == 0) {
+            setTheSpinner(mWithoutSupporters);
+        }
+
     }
 
     private void setTheView() {
         setSupportActionBar(mIMViewBinding.myToolbar);
         mIMViewBinding.sprnPermissionLevel.setOnItemSelectedListener(this);
         setTheSpinner(mPermissionLevels);
-
-
     }
 
     private void setTheSpinner(String[] list) {
