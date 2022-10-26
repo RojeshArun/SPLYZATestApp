@@ -10,6 +10,7 @@ import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 
 import java.io.IOException;
+import java.util.Random;
 
 public class InviteMemberViewModel extends ViewModel {
 
@@ -58,15 +59,39 @@ public class InviteMemberViewModel extends ViewModel {
                 "\"supporterLimit\": 0\n" +
                 "} }";
 
+        String dummyResponse3 = "{\n" +
+                "\"id\": \"57994f271ca5dd20847b910c\",\n" +
+                "\"members\": {\n" +
+                "\"total\": 89,\n" +
+                "\"administrators\": 1,\n" +
+                "\"managers\": 18,\n" +
+                "\"editors\": 6,\n" +
+                "\"members\": 100,\n" +
+                "\"supporters\": 0\n" +
+                "},\n" +
+                "\"plan\": {\n" +
+                "\"memberLimit\": 100,\n" +
+                "\"supporterLimit\": 0\n" +
+                "} }";
+
         Moshi moshi = new Moshi.Builder().build();
         JsonAdapter<Team> adapter = moshi.adapter(Team.class);
-        int ran = (int)( Math.random() * 10);
-        Team team;
+        Random randomGenerator = new Random();
+        int ran = randomGenerator.nextInt(3) + 1;
+        String response = null;
         try {
-            if (ran % 2 == 0)
-                team = adapter.fromJson(dummyResponse1);
-            else
-                team = adapter.fromJson(dummyResponse2);
+            switch (ran) {
+                case 1:
+                    response = dummyResponse1;
+                    break;
+                case 2:
+                    response = dummyResponse2;
+                    break;
+                case 3:
+                    response = dummyResponse3;
+                    break;
+            }
+            Team team = adapter.fromJson(response);
             appExecutors.mainThread().execute(() -> teams.setValue(team));
         } catch (IOException e) {
             e.printStackTrace();

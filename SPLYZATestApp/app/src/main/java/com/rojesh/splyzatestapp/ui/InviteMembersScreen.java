@@ -28,7 +28,9 @@ public class InviteMembersScreen extends AppCompatActivity implements
 
     private InviteMembersLytBinding mIMViewBinding;
     private String[] mPermissionLevels = {"Coach", "Player Coach", "Player", "Supporter"};
+    private String[] mTeamFull = {"Supporter"};
     private InviteMemberViewModel mMemberViewModel;
+    private ArrayAdapter mPermissionSpinner;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,17 +62,28 @@ public class InviteMembersScreen extends AppCompatActivity implements
         } else {
             mIMViewBinding.lytSupporters.setVisibility(View.GONE);
         }
+        //Set Invitation Permissions
+        //Rule 1 If there are no available members slots ( team is full ), the coach , player
+        // coach and Player options should be disabled.
+        if (teams.plan.memberLimit == teams.members.members) {
+            setTheSpinner(mTeamFull);
+        }
 
     }
 
     private void setTheView() {
         setSupportActionBar(mIMViewBinding.myToolbar);
         mIMViewBinding.sprnPermissionLevel.setOnItemSelectedListener(this);
-        ArrayAdapter mPermissionSpinner = new ArrayAdapter(this,
-                android.R.layout.simple_spinner_item, mPermissionLevels);
+        setTheSpinner(mPermissionLevels);
+
+
+    }
+
+    private void setTheSpinner(String[] list) {
+        mPermissionSpinner = new ArrayAdapter(this,
+                android.R.layout.simple_spinner_item, list);
         mPermissionSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mIMViewBinding.sprnPermissionLevel.setAdapter(mPermissionSpinner);
-
     }
 
     @Override
