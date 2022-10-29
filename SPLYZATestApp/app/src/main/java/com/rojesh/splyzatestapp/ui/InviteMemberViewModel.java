@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.rojesh.splyzatestapp.QRCodeGenerator;
 import com.rojesh.splyzatestapp.networking.AppExecutors;
+import com.rojesh.splyzatestapp.ui.model.InviteResponse;
 import com.rojesh.splyzatestapp.ui.model.Team;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
@@ -16,6 +17,8 @@ import java.util.Random;
 public class InviteMemberViewModel extends ViewModel {
 
     private final MutableLiveData<Team> teams = new MutableLiveData<>();
+    private final MutableLiveData<InviteResponse> inviteURL = new MutableLiveData<>();
+
     private AppExecutors appExecutors;
 
     public InviteMemberViewModel() {
@@ -25,6 +28,10 @@ public class InviteMemberViewModel extends ViewModel {
 
     LiveData<Team> getTeams() {
         return teams;
+    }
+
+    LiveData<InviteResponse> getInviteULR() {
+        return inviteURL;
     }
 
     private void loadTeam() {
@@ -117,14 +124,41 @@ public class InviteMemberViewModel extends ViewModel {
         }
     }
 
-    public void fetchInviteURLandGenerateQRCode() {
+    public void fetchInviteURL(String type) {
         //TODO Fetch URL
-        String url = "";
+        String payLoad = "";
 
+        //Generating dummy url
+        String url = "";
+        switch (type) {
+            case "Coach":
+                payLoad = "manager";
+                url = "https://example.com/ti/manager%22";
+                break;
+            case "Player Coach":
+                payLoad = "editor";
+                url = "https://example.com/ti/editor%66";
+                break;
+            case "Player":
+                payLoad = "member";
+                url = "https://example.com/ti/member%55";
+                break;
+            case "Supporter":
+                payLoad = "readonly";
+                url = "https://example.com/ti/readonly%44";
+                break;
+
+        }
+        InviteResponse inviteResponse = new InviteResponse(url);
+        appExecutors.mainThread().execute(() -> inviteURL.setValue(inviteResponse));
+    }
+
+    /*public void   generateQRCode(){
         //TODo Generate QR Code
         QRCodeGenerator qrCodeGenerator = new QRCodeGenerator();
         qrCodeGenerator.generateQRCode(url);
-    }
+
+    }*/
 
 
 }

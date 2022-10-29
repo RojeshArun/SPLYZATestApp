@@ -1,5 +1,6 @@
 package com.rojesh.splyzatestapp.ui;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -26,7 +27,7 @@ import com.rojesh.splyzatestapp.viewmodel.ViewModelFactory;
 import javax.inject.Inject;
 
 public class InviteMembersScreen extends AppCompatActivity implements
-        OnItemSelectedListener {
+        OnItemSelectedListener, View.OnClickListener {
     @Inject
     ViewModelFactory viewModelFactory;
 
@@ -36,6 +37,7 @@ public class InviteMembersScreen extends AppCompatActivity implements
     private String[] mWithoutSupporters = {"Coach", "Player Coach", "Player"};
     private InviteMemberViewModel mMemberViewModel;
     private ArrayAdapter mPermissionSpinner;
+    private String inviteURL;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +55,18 @@ public class InviteMembersScreen extends AppCompatActivity implements
             if (teams != null)
                 setTheData(teams);
         });
+
+        mMemberViewModel.getInviteULR().observe(this,inviteURL ->{
+            if(inviteURL != null ){
+                this.inviteURL = String.valueOf(inviteURL);
+            }
+        });
+    }
+
+    private void gotoQRCodeScreen(String url) {
+        Intent qrIntent = new Intent(this,QRCodeInviteScreen.class);
+        qrIntent.putExtra("url",url);
+        startActivity(qrIntent);
     }
 
     private void setTheData(Team teams) {
@@ -91,6 +105,9 @@ public class InviteMembersScreen extends AppCompatActivity implements
         setSupportActionBar(mIMViewBinding.myToolbar);
         mIMViewBinding.sprnPermissionLevel.setOnItemSelectedListener(this);
         setTheSpinner(mPermissionLevels);
+        mIMViewBinding.btnBack.setOnClickListener(this);
+        mIMViewBinding.btnShareQr.setOnClickListener(this);
+        mIMViewBinding.btnCopyLink.setOnClickListener(this);
     }
 
     private void setTheSpinner(String[] list) {
@@ -104,7 +121,7 @@ public class InviteMembersScreen extends AppCompatActivity implements
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Toast.makeText(this, "Permission Changed to "+mPermissionSpinner.getItem(position),
                 Toast.LENGTH_SHORT).show();
-        mMemberViewModel.fetchInviteURLandGenerateQRCode();
+        mMemberViewModel.fetchInviteURL((String) mPermissionSpinner.getItem(position));
     }
 
     @Override
@@ -112,4 +129,21 @@ public class InviteMembersScreen extends AppCompatActivity implements
 
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_back:
+                finish();
+                break;
+            case R.id.btn_copy_link:
+                copyTheURLToClickBoard();
+                break;
+            case R.id.btn_share_qr:
+                gotoQRCodeScreen(inviteURL);
+                break;
+        }
+    }
+
+    private void copyTheURLToClickBoard() {
+    }
 }

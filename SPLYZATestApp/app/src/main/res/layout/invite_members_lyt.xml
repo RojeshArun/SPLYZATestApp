@@ -202,10 +202,5 @@
         android:textColor="@android:color/white"
         android:textSize="20sp" />
 
-    <ImageView
-        android:id="@+id/qrcode"
-        android:layout_width="200dp"
-        android:layout_height="200dp"/>
-
 
 </LinearLayout>
