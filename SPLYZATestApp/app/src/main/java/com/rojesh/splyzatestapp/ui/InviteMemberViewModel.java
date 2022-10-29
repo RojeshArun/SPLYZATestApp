@@ -153,12 +153,4 @@ public class InviteMemberViewModel extends ViewModel {
         appExecutors.mainThread().execute(() -> inviteURL.setValue(inviteResponse));
     }
 
-    /*public void   generateQRCode(){
-        //TODo Generate QR Code
-        QRCodeGenerator qrCodeGenerator = new QRCodeGenerator();
-        qrCodeGenerator.generateQRCode(url);
-
-    }*/
-
-
 }

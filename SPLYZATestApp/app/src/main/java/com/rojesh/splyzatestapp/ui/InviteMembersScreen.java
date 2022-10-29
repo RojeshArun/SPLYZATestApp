@@ -58,7 +58,7 @@ public class InviteMembersScreen extends AppCompatActivity implements
 
         mMemberViewModel.getInviteULR().observe(this,inviteURL ->{
             if(inviteURL != null ){
-                this.inviteURL = String.valueOf(inviteURL);
+                this.inviteURL = String.valueOf(inviteURL.url);
             }
         });
     }
