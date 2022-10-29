@@ -1,11 +1,13 @@
 package com.rojesh.splyzatestapp.ui;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -13,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.zxing.BarcodeFormat;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.rojesh.splyzatestapp.R;
 import com.rojesh.splyzatestapp.databinding.InviteMembersLytBinding;
 import com.rojesh.splyzatestapp.ui.model.Member;
@@ -98,11 +102,14 @@ public class InviteMembersScreen extends AppCompatActivity implements
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+        Toast.makeText(this, "Permission Changed to "+mPermissionSpinner.getItem(position),
+                Toast.LENGTH_SHORT).show();
+        mMemberViewModel.fetchInviteURLandGenerateQRCode();
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
 }

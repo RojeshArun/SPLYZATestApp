@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.rojesh.splyzatestapp.QRCodeGenerator;
 import com.rojesh.splyzatestapp.networking.AppExecutors;
 import com.rojesh.splyzatestapp.ui.model.Team;
 import com.squareup.moshi.JsonAdapter;
@@ -115,4 +116,15 @@ public class InviteMemberViewModel extends ViewModel {
             e.printStackTrace();
         }
     }
+
+    public void fetchInviteURLandGenerateQRCode() {
+        //TODO Fetch URL
+        String url = "";
+
+        //TODo Generate QR Code
+        QRCodeGenerator qrCodeGenerator = new QRCodeGenerator();
+        qrCodeGenerator.generateQRCode(url);
+    }
+
+
 }
