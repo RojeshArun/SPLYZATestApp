@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.rojesh.splyzatestapp.QRCodeGenerator;
 import com.rojesh.splyzatestapp.networking.AppExecutors;
+import com.rojesh.splyzatestapp.networking.RepoService;
+import com.rojesh.splyzatestapp.ui.model.InvitePayLoad;
 import com.rojesh.splyzatestapp.ui.model.InviteResponse;
 import com.rojesh.splyzatestapp.ui.model.Team;
 import com.squareup.moshi.JsonAdapter;
@@ -14,6 +16,12 @@ import com.squareup.moshi.Moshi;
 import java.io.IOException;
 import java.util.Random;
 
+import javax.inject.Inject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class InviteMemberViewModel extends ViewModel {
 
     private final MutableLiveData<Team> teams = new MutableLiveData<>();
@@ -21,7 +29,11 @@ public class InviteMemberViewModel extends ViewModel {
 
     private AppExecutors appExecutors;
 
-    public InviteMemberViewModel() {
+    private final RepoService repoService;
+
+    @Inject
+    public InviteMemberViewModel(RepoService repoService) {
+        this.repoService = repoService;
         appExecutors = new AppExecutors();
         appExecutors.networkID().execute(() -> loadTeam());
     }
@@ -35,6 +47,23 @@ public class InviteMemberViewModel extends ViewModel {
     }
 
     private void loadTeam() {
+        //Dummy API Call
+        repoService.getTeamDetails().enqueue(new Callback<Team>() {
+            @Override
+            public void onResponse(Call<Team> call, Response<Team> response) {
+                //Success
+            }
+
+            @Override
+            public void onFailure(Call<Team> call, Throwable t) {
+                //Failure
+            }
+        });
+        //Handle Response
+        handleResponse();
+    }
+
+    private void handleResponse() {
         //set Dummy Data
         //return dummy data
         String dummyResponse1 = "{\n" +
@@ -125,11 +154,10 @@ public class InviteMemberViewModel extends ViewModel {
     }
 
     public void fetchInviteURL(String type) {
-        //TODO Fetch URL
-        String payLoad = "";
-
         //Generating dummy url
         String url = "";
+        String payLoad = "";
+
         switch (type) {
             case "Coach":
                 payLoad = "manager";
@@ -149,6 +177,22 @@ public class InviteMemberViewModel extends ViewModel {
                 break;
 
         }
+
+        // Fetch URL Dummy API Call
+        InvitePayLoad payLoadReq = new InvitePayLoad(payLoad);
+        repoService.getInviteURL(payLoadReq).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(Call<InviteResponse> call, Response<InviteResponse> response) {
+                //Success
+            }
+
+            @Override
+            public void onFailure(Call<InviteResponse> call, Throwable t) {
+                //Failure
+            }
+        });
+
+        //Success Response
         InviteResponse inviteResponse = new InviteResponse(url);
         appExecutors.mainThread().execute(() -> inviteURL.setValue(inviteResponse));
     }

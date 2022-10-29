@@ -145,5 +145,5 @@ public class InviteMembersScreen extends AppCompatActivity implements
     }
 
     private void copyTheURLToClickBoard() {
-    }
+        Toast.makeText(this, "Invite URL Copied. "+ inviteURL, Toast.LENGTH_SHORT).show();    }
 }
