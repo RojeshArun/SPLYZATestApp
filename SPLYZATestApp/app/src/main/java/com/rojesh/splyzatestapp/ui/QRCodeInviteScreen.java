@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.View;
 
 import com.rojesh.splyzatestapp.R;
 import com.rojesh.splyzatestapp.databinding.ActivityQrcodeInviteScreenBinding;
@@ -15,7 +16,7 @@ import com.rojesh.splyzatestapp.viewmodel.ViewModelFactory;
 
 import javax.inject.Inject;
 
-public class QRCodeInviteScreen extends AppCompatActivity {
+public class QRCodeInviteScreen extends AppCompatActivity implements View.OnClickListener {
 
     @Inject
     ViewModelFactory viewModelFactory;
@@ -35,6 +36,8 @@ public class QRCodeInviteScreen extends AppCompatActivity {
     }
 
     private void setTheView() {
+        setSupportActionBar(mQrBinding.myToolbar);
+        mQrBinding.btnBack.setOnClickListener(this);
         if (getIntent() != null && getIntent().getExtras() != null) {
             url = getIntent().getExtras().getString("url");
             mQRViewModel.generateQRCode(url);
@@ -44,5 +47,10 @@ public class QRCodeInviteScreen extends AppCompatActivity {
                 mQrBinding.qrCode.setImageBitmap(bitmap);
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        finish();
     }
 }

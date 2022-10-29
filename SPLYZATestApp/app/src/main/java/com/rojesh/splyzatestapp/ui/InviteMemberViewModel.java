@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.rojesh.splyzatestapp.QRCodeGenerator;
 import com.rojesh.splyzatestapp.networking.AppExecutors;
+import com.rojesh.splyzatestapp.networking.NetworkModule;
 import com.rojesh.splyzatestapp.networking.RepoService;
 import com.rojesh.splyzatestapp.ui.model.InvitePayLoad;
 import com.rojesh.splyzatestapp.ui.model.InviteResponse;
@@ -28,8 +29,7 @@ public class InviteMemberViewModel extends ViewModel {
     private final MutableLiveData<InviteResponse> inviteURL = new MutableLiveData<>();
 
     private AppExecutors appExecutors;
-
-    private final RepoService repoService;
+    private RepoService repoService;
 
     @Inject
     public InviteMemberViewModel(RepoService repoService) {
@@ -48,7 +48,7 @@ public class InviteMemberViewModel extends ViewModel {
 
     private void loadTeam() {
         //Dummy API Call
-        repoService.getTeamDetails().enqueue(new Callback<Team>() {
+        repoService.getTeamDetails("1").enqueue(new Callback<Team>() {
             @Override
             public void onResponse(Call<Team> call, Response<Team> response) {
                 //Success
@@ -155,6 +155,12 @@ public class InviteMemberViewModel extends ViewModel {
 
     public void fetchInviteURL(String type) {
         //Generating dummy url
+        appExecutors.networkID().execute(() -> fetchInviteApiCall(type));
+    }
+
+
+    private void fetchInviteApiCall(String type) {
+
         String url = "";
         String payLoad = "";
 
@@ -175,12 +181,11 @@ public class InviteMemberViewModel extends ViewModel {
                 payLoad = "readonly";
                 url = "https://example.com/ti/readonly%44";
                 break;
-
         }
 
         // Fetch URL Dummy API Call
         InvitePayLoad payLoadReq = new InvitePayLoad(payLoad);
-        repoService.getInviteURL(payLoadReq).enqueue(new Callback<>() {
+        repoService.getInviteURL("1", payLoadReq).enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<InviteResponse> call, Response<InviteResponse> response) {
                 //Success

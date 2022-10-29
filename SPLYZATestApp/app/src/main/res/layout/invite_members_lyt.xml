@@ -10,7 +10,7 @@
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="@color/navy_blue"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
@@ -20,6 +20,7 @@
             android:id="@+id/btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:gravity="left"
             android:text="@string/back" />
 
@@ -27,6 +28,7 @@
             android:id="@+id/lbl_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:layout_gravity="center"
             android:text="@string/invite_members"
             android:textSize="24sp" />
@@ -52,11 +54,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="15sp"
                 android:text="@string/current_members" />
 
             <TextView
                 android:id="@+id/txt_current_memebers_val"
                 android:layout_width="wrap_content"
+                android:textSize="15sp"
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textStyle="bold" />
@@ -72,12 +76,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="15sp"
                 android:text="@string/limit" />
 
             <TextView
                 android:id="@+id/txt_limit_val"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="15sp"
                 android:text=""
                 android:textStyle="bold" />
 
@@ -104,6 +110,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="15sp"
                 android:text="@string/current_supporters" />
 
             <TextView
@@ -111,6 +118,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -124,6 +132,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="15sp"
                 android:text="@string/limit" />
 
             <TextView
@@ -131,6 +140,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -186,7 +196,7 @@
         android:background="@android:color/black"
         android:text="@string/share_qr_code"
         android:textColor="@android:color/white"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/btn_copy_link"
@@ -200,7 +210,7 @@
         android:background="@android:color/black"
         android:text="@string/copy_link"
         android:textColor="@android:color/white"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
 
 </LinearLayout>

@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.google.zxing.BarcodeFormat;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.rojesh.splyzatestapp.R;
+import com.rojesh.splyzatestapp.base.MyApplication;
 import com.rojesh.splyzatestapp.databinding.InviteMembersLytBinding;
 import com.rojesh.splyzatestapp.ui.model.Member;
 import com.rojesh.splyzatestapp.ui.model.Team;
@@ -42,6 +43,7 @@ public class InviteMembersScreen extends AppCompatActivity implements
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MyApplication.getApplicationComponent(this).inject(this);
         mMemberViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(InviteMemberViewModel.class);
         mIMViewBinding = InviteMembersLytBinding.inflate(getLayoutInflater());
@@ -119,8 +121,8 @@ public class InviteMembersScreen extends AppCompatActivity implements
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(this, "Permission Changed to "+mPermissionSpinner.getItem(position),
-                Toast.LENGTH_SHORT).show();
+/*        Toast.makeText(this, "Permission Changed to "+mPermissionSpinner.getItem(position),
+                Toast.LENGTH_SHORT).show();*/
         mMemberViewModel.fetchInviteURL((String) mPermissionSpinner.getItem(position));
     }
 

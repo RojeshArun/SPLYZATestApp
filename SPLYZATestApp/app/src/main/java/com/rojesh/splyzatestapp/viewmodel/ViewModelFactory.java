@@ -23,6 +23,11 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        return (T) viewModels.get(modelClass).get();
+        try {
+            return (T) viewModels.get(modelClass).get();
+        } catch (Exception e) {
+            throw new RuntimeException("Error creating the view model for class-"
+                    + modelClass.getSimpleName(), e);
+        }
     }
 }
